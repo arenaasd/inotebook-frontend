@@ -8,7 +8,7 @@ export const NoteState = ({ children }) => {
 
   // Fetch all notes from the API
   const getNotes = async () => {
-    const response = await fetch(`http://localhost:3000/api/notes/getnotes`, {
+    const response = await fetch(`https://inotebook-backenda.vercel.app/api/notes/getnotes`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const NoteState = ({ children }) => {
 
   // Add a new note
   const addNote = async (title, description, tag) => {
-    const response = await fetch(`http://localhost:3000/api/notes/addnote`, {
+    const response = await fetch(`https://inotebook-backenda.vercel.app/api/notes/addnote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const NoteState = ({ children }) => {
 
   // Delete a note
   const DeleteNote = async (id) => {
-    const response = await fetch(`http://localhost:3000/api/notes/deletenote/${id}`, {
+    const response = await fetch(`https://inotebook-backenda.vercel.app/api/notes/deletenote/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const NoteState = ({ children }) => {
 
   // Edit a note
   const EditNote = async (id, title, description, tag) => {
-    const response = await fetch(`http://localhost:3000/api/notes/updatenote/${id}`, {
+    const response = await fetch(`https://inotebook-backenda.vercel.app/api/notes/updatenote/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
