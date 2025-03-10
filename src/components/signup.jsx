@@ -11,29 +11,35 @@ const Signup = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Form data:', formData);  // Log form data before sending
+
     try {
       const response = await fetch("https://inotebook-backenda.vercel.app/api/auth/register", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-  
-      const json = await response.json(); // Always parse JSON first
-  
+
+      const json = await response.json();
+      console.log("Backend response:", json);  // Log backend response
+
       if (json.success) {
         localStorage.setItem('token', json.token);
         navigate('/');
         props.showAlert("Account Created Successfully", "success");
       } else {
-        // Handle case when email already exists
-        props.showAlert("User ALready Exists", "danger");
+        // Check for specific error messages
+        if (json.errors && json.errors[0] && json.errors[0].msg === 'User already exists') {
+          props.showAlert("User Already Exists", "danger");
+        } else {
+          props.showAlert("Invalid Details", "danger");
+        }
       }
     } catch (error) {
+      console.error('Error occurred:', error);  // Log error to console for debugging
       props.showAlert("Something Went Wrong!", "danger");
     }
   };
-  
-  
 
   return (
     <div className="signup-page">
@@ -45,15 +51,42 @@ const Signup = (props) => {
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label text-white">Name</label>
-                  <input type="text" name="name" className="form-control custom-input" id="name" placeholder="Enter name" required value={formData.name} onChange={handleChange} />
+                  <input 
+                    type="text" 
+                    name="name" 
+                    className="form-control custom-input" 
+                    id="name" 
+                    placeholder="Enter name" 
+                    required 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                  />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label text-white">Email address</label>
-                  <input type="email" name="email" className="form-control custom-input" id="email" placeholder="Enter email" required value={formData.email} onChange={handleChange} />
+                  <input 
+                    type="email" 
+                    name="email" 
+                    className="form-control custom-input" 
+                    id="email" 
+                    placeholder="Enter email" 
+                    required 
+                    value={formData.email} 
+                    onChange={handleChange} 
+                  />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label text-white">Password</label>
-                  <input type="password" name="password" className="form-control custom-input" id="password" placeholder="Enter password" required value={formData.password} onChange={handleChange} />
+                  <input 
+                    type="password" 
+                    name="password" 
+                    className="form-control custom-input" 
+                    id="password" 
+                    placeholder="Enter password" 
+                    required 
+                    value={formData.password} 
+                    onChange={handleChange} 
+                  />
                 </div>
                 <button type="submit" className="btn btn-warning w-100">Sign Up</button>
               </form>
