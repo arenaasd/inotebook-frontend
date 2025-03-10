@@ -26,7 +26,7 @@ const Signup = (props) => {
         props.showAlert("Account Created Successfully", "success");
       } else {
         // Handle case when email already exists
-        props.showAlert("Invalid Details", "danger");
+        props.showAlert("User ALready Exists", "danger");
       }
     } catch (error) {
       props.showAlert("Something Went Wrong!", "danger");
